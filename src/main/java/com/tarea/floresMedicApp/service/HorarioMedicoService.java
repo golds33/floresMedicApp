@@ -114,23 +114,26 @@ public class HorarioMedicoService {
 
     // --- Métodos Auxiliares de Mapeo ---
     private HorarioMedicoResponse mapEntityToResponseDto(HorarioMedico horario) {
-        // Mapear el médico asociado también a su DTO de respuesta
-        MedicoResponse medicoResponse = MedicoResponse.builder()
-                .id(horario.getMedico().getId())
-                .nombres(horario.getMedico().getNombres())
-                .apellidos(horario.getMedico().getApellidos())
-                .especialidad(horario.getMedico().getEspecialidad())
-                .numeroColegiatura(horario.getMedico().getNumeroColegiatura())
-                .telefono(horario.getMedico().getTelefono())
-                .email(horario.getMedico().getEmail())
-                .build();
+        HorarioMedicoResponse response = new HorarioMedicoResponse(); // Instanciar manualmente el DTO
+        
+        response.setId(horario.getId());
+        
+        // Es buena práctica verificar si el objeto Medico no es nulo antes de acceder a sus propiedades
+        if (horario.getMedico() != null) {
+            response.setMedicoId(horario.getMedico().getId()); // Llamando al setter del DTO
+            response.setNombreMedico(horario.getMedico().getNombres() + " " + horario.getMedico().getApellidos()); // Llamando al setter del DTO
+        } else {
+            // Manejar el caso si el médico es nulo (aunque con nullable=false en la entidad no debería pasar)
+            response.setMedicoId(null);
+            response.setNombreMedico("Médico Desconocido");
+        }
+        
+        response.setDiaSemana(horario.getDiaSemana());
+        response.setHoraInicio(horario.getHoraInicio());
+        response.setHoraFin(horario.getHoraFin());
+        response.setDisponible(horario.isDisponible()); // Llamando al setter del DTO y al getter del Entity
 
-        return HorarioMedicoResponse.builder()
-                .id(horario.getId())
-                .medico(medicoResponse) // Asigna el DTO del médico
-                .diaSemana(horario.getDiaSemana())
-                .horaInicio(horario.getHoraInicio())
-                .horaFin(horario.getHoraFin())
-                .build();
+        return response;
     }
+
 }

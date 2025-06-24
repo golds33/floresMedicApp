@@ -50,6 +50,15 @@ public class HorarioMedico {
 
 	    @Column(nullable = false)
 	    private boolean disponible; // Para indicar si el horario está activo o no
+	    
+        
+        public boolean isDisponible() { // Nombre de convención para booleans
+            return disponible;
+        }
+        // Setter en la entidad (opcional si solo lees desde el DTO, pero buena práctica)
+        public void setDisponible(boolean disponible) {
+            this.disponible = disponible;
+        }
 	
     // Constructores
     public HorarioMedico() {}
@@ -74,6 +83,7 @@ public class HorarioMedico {
         private DayOfWeek diaSemana;
         private LocalTime horaInicio;
         private LocalTime horaFin;
+        
 
         public Builder id(Long id) { this.id = id; return this; }
         public Builder medico(Medico medico) { this.medico = medico; return this; }
