@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MedicoResponse {
 	private Long id;
+    private String dni; // Asumo que el DNI también se retornaría en la respuesta
     private String nombres;
     private String apellidos;
     private String especialidad;
@@ -18,11 +19,20 @@ public class MedicoResponse {
     private String telefono;
     private String email;
 
-    // Constructores
-    public MedicoResponse() {}
-    private MedicoResponse(Long id, String nombres, String apellidos, String especialidad,
-                           String numeroColegiatura, String telefono, String email) {
+    // --- CONSTRUCTORES ---
+
+    // Constructor vacío (NoArgsConstructor equivalente de Lombok)
+    public MedicoResponse() {
+        super();
+    }
+
+    // Constructor con todos los argumentos (AllArgsConstructor equivalente de Lombok)
+    public MedicoResponse(Long id, String dni, String nombres, String apellidos,
+                          String especialidad, String numeroColegiatura,
+                          String telefono, String email) {
+        super();
         this.id = id;
+        this.dni = dni;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.especialidad = especialidad;
@@ -31,43 +41,78 @@ public class MedicoResponse {
         this.email = email;
     }
 
-    // Builder
-    public static Builder builder() { return new Builder(); }
-    public static class Builder {
-        private Long id;
-        private String nombres;
-        private String apellidos;
-        private String especialidad;
-        private String numeroColegiatura;
-        private String telefono;
-        private String email;
-
-        public Builder id(Long id) { this.id = id; return this; }
-        public Builder nombres(String nombres) { this.nombres = nombres; return this; }
-        public Builder apellidos(String apellidos) { this.apellidos = apellidos; return this; }
-        public Builder especialidad(String especialidad) { this.especialidad = especialidad; return this; }
-        public Builder numeroColegiatura(String numeroColegiatura) { this.numeroColegiatura = numeroColegiatura; return this; }
-        public Builder telefono(String telefono) { this.telefono = telefono; return this; }
-        public Builder email(String email) { this.email = email; return this; }
-        public MedicoResponse build() {
-            return new MedicoResponse(id, nombres, apellidos, especialidad, numeroColegiatura, telefono, email);
-        }
+    // --- GETTERS ---
+    public Long getId() {
+        return id;
     }
 
-    // Getters
-    public Long getId() { return id; }
-    public String getNombres() { return nombres; }
-    public String getApellidos() { return apellidos; }
-    public String getEspecialidad() { return especialidad; }
-    public String getNumeroColegiatura() { return numeroColegiatura; }
-    public String getTelefono() { return telefono; }
-    public String getEmail() { return email; }
+    public String getDni() {
+        return dni;
+    }
 
-    // toString() (Opcional)
+    public String getNombres() {
+        return nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public String getNumeroColegiatura() {
+        return numeroColegiatura;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    // --- SETTERS ---
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public void setNumeroColegiatura(String numeroColegiatura) {
+        this.numeroColegiatura = numeroColegiatura;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    // --- MÉTODO toString() ---
     @Override
     public String toString() {
         return "MedicoResponse{" +
                "id=" + id +
+               ", dni='" + dni + '\'' +
                ", nombres='" + nombres + '\'' +
                ", apellidos='" + apellidos + '\'' +
                ", especialidad='" + especialidad + '\'' +
@@ -76,4 +121,65 @@ public class MedicoResponse {
                ", email='" + email + '\'' +
                '}';
     }
+
+    // --- BUILDER (Implementación manual, equivalente a @Builder de Lombok) ---
+    public static MedicoResponseBuilder builder() {
+        return new MedicoResponseBuilder();
+    }
+
+    public static class MedicoResponseBuilder {
+        private Long id;
+        private String dni;
+        private String nombres;
+        private String apellidos;
+        private String especialidad;
+        private String numeroColegiatura;
+        private String telefono;
+        private String email;
+
+        public MedicoResponseBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public MedicoResponseBuilder dni(String dni) {
+            this.dni = dni;
+            return this;
+        }
+
+        public MedicoResponseBuilder nombres(String nombres) {
+            this.nombres = nombres;
+            return this;
+        }
+
+        public MedicoResponseBuilder apellidos(String apellidos) {
+            this.apellidos = apellidos;
+            return this;
+        }
+
+        public MedicoResponseBuilder especialidad(String especialidad) {
+            this.especialidad = especialidad;
+            return this;
+        }
+
+        public MedicoResponseBuilder numeroColegiatura(String numeroColegiatura) {
+            this.numeroColegiatura = numeroColegiatura;
+            return this;
+        }
+
+        public MedicoResponseBuilder telefono(String telefono) {
+            this.telefono = telefono;
+            return this;
+        }
+
+        public MedicoResponseBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public MedicoResponse build() {
+            return new MedicoResponse(id, dni, nombres, apellidos, especialidad, numeroColegiatura, telefono, email);
+        }
+    }
+    
 }

@@ -66,4 +66,22 @@ public class HorarioMedicoResponse {
 	               ", horaFin=" + horaFin +
 	               '}';
 	    }
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public void setMedico(MedicoResponse medico) {
+			this.medico = medico;
+		}
+		public void setDiaSemana(DayOfWeek diaSemana) {
+			this.diaSemana = diaSemana;
+		}
+		public void setHoraInicio(LocalTime horaInicio) {
+			this.horaInicio = horaInicio;
+		}
+		public void setHoraFin(LocalTime horaFin) {
+			this.horaFin = horaFin;
+		}
+	    
+	    
+	    
 }

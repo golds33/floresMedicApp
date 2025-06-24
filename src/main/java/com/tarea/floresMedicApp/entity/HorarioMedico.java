@@ -29,24 +29,28 @@ import lombok.NoArgsConstructor;
     @UniqueConstraint(columnNames = {"medico_id", "diaSemana"}) // A doctor can only have one schedule per day
 })
 public class HorarioMedico {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Many schedules can belong to one doctor
-    @JoinColumn(name = "medico_id", nullable = false) // Foreign key to medico table
-    private Medico medico;
+	    // Relación ManyToOne con Medico: Muchos HorariosMedicos para un solo Medico
+	    @ManyToOne(fetch = FetchType.LAZY) // Lazy loading es mejor para rendimiento
+	    @JoinColumn(name = "medico_id", nullable = false) // Columna FK en esta tabla (horarios_medicos)
+	    private Medico medico; // El objeto Medico completo
 
-    @Enumerated(EnumType.STRING) // Store enum as String in DB
-    @Column(nullable = false)
-    private DayOfWeek diaSemana; // Enum: LUNES, MARTES, etc.
+	    @Enumerated(EnumType.STRING) // Guarda el nombre del enum (ej. "LUNES") en la DB
+	    @Column(nullable = false)
+	    private DayOfWeek diaSemana; // O String, si no usas un Enum DayOfWeek
 
-    @Column(nullable = false)
-    private LocalTime horaInicio;
+	    @Column(nullable = false)
+	    private LocalTime horaInicio; // Usar LocalTime para horas
 
-    @Column(nullable = false)
-    private LocalTime horaFin;
+	    @Column(nullable = false)
+	    private LocalTime horaFin; // Usar LocalTime para horas
 
+	    @Column(nullable = false)
+	    private boolean disponible; // Para indicar si el horario está activo o no
+	
     // Constructores
     public HorarioMedico() {}
     private HorarioMedico(Long id, Medico medico, DayOfWeek diaSemana, LocalTime horaInicio, LocalTime horaFin) {
